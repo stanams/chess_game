@@ -1,6 +1,0 @@
-require 'byebug'
-load './move_modules.rb'
-load './piece.rb'
-load './board.rb'
-load './cursor.rb'
-load './display.rb'
