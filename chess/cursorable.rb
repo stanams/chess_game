@@ -1,3 +1,5 @@
+require "io/console"
+
 module Cursorable
   KEYMAP = {
     " " => :space,
@@ -65,19 +67,7 @@ module Cursorable
   end
 
   def update_pos(diff)
-    # debugger
     new_pos = [@cursor_pos[0] + diff[0], @cursor_pos[1] + diff[1]]
-    @cursor_pos = new_pos if @board.in_bounds?(new_pos)
+    @cursor_pos = new_pos if @board.valid_pos?(new_pos)
   end
-end
-
-class Test
-
-  include Cursorable
-
-  def initialize(cursor_pos = [0, 0])
-    @cursor_pos = cursor_pos
-    @board = Board.new
-  end
-
 end

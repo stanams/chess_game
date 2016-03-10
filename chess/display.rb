@@ -1,43 +1,60 @@
-require_relative 'board'
-require_relative 'cursor'
-require 'colorize'
-# require "io/console"
+require "colorize"
+require_relative "cursorable"
 
 class Display
-
   include Cursorable
 
-  attr_reader :board
+  attr_reader :board, :notifications
 
-  def initialize
-    @board = Board.new
-    @cursor_pos = [0,0]
-    @selected = false
+  def initialize(board)
+    @board = board
+    @cursor_pos = [0, 0]
+    @notifications = {}
+  end
+
+  def build_grid
+    @board.rows.map.with_index do |row, i|
+      build_row(row, i)
+    end
+  end
+
+  def build_row(row, i)
+    row.map.with_index do |piece, j|
+      color_options = colors_for(i, j)
+      piece.to_s.colorize(color_options)
+    end
+  end
+
+  def colors_for(i, j)
+    if [i, j] == @cursor_pos
+      bg = :light_red
+    elsif (i + j).odd?
+      bg = :light_blue
+    else
+      bg = :light_yellow
+    end
+    { background: bg }
+  end
+
+  def reset!
+    @notifications.delete(:error)
+  end
+
+  def uncheck!
+    @notifications.delete(:check)
+  end
+
+  def set_check!
+    @notifications[:check] = "Check!"
   end
 
   def render
-    @board.grid.each_with_index do |row, i1|
-      # debugger
-      row_line = "#{i1} "
-      row.each_with_index do |piece, i2|
-        # row_line += " #{piece.to_s} "
-        row_line += colorize(piece, i1, i2)
-      end
-      puts row_line
+    system("clear")
+    puts "Arrow keys, WASD, or vim to move, space or enter to confirm."
+    build_grid.each { |row| puts row.join }
+
+    @notifications.each do |key, val|
+      puts "#{val}"
     end
-
   end
-
-  def colorize(piece, i1, i2)
-    # debugger
-    if [i1, i2] == @cursor_pos
-      piece.to_s.colorize(piece.color).on_red
-    elsif (i1 + i2).even?
-      piece.to_s.colorize(piece.color).on_yellow
-    else
-      piece.to_s.colorize(piece.color).on_light_black
-    end
-
-  end
-
 end
