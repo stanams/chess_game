@@ -1,4 +1,4 @@
-# chess_game
+# Chess
 
 Ruby command line implementation of Chess.
 
