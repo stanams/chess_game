@@ -12,7 +12,7 @@ Game made to practice object-oriented principles and handling large projects. Im
 - Game logic
 - Pieces -- uses inheritance to define generic pieces, and modules to DRY slidable pieces (bishop, rook, queen) and steppable pieces (knight, king).
 - Pawns are implemented separately due to their unique movement properties.
-- 
+
 
 ## How to play?
 
