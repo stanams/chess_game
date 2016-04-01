@@ -20,6 +20,7 @@ To play chess in the terminal, follow these simple steps:
 - open your preferred terminal
 - git clone https://github.com/stanams/chess_game.git or download the repository
 - enter the chess folder (cd chess)
+- open irb or pry
 - load 'game.rb'
 - create a new game: g = Game.new
 - call g.play
